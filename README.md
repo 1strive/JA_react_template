@@ -10,3 +10,9 @@
 │   └── index.tsx # react应用入口页面
 ├── tsconfig.json  # ts配置
 └── package.json
+
+参考：https://juejin.cn/post/7111922283681153038#heading-4
+! 
+1、暂未进行环境变量配置
+
+进度：一、二、三、
