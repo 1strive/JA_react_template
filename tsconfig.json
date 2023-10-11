@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "lib": ["DOM", "DOM.Iterable", "ESNext"], // 指定要包含在编译中的库文件
+      "allowJs": false, // 允许编译 javascript 文件
+      "skipLibCheck": false,
+      "esModuleInterop": false,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react", // react18这里也可以改成react-jsx
+    },
+    "include": ["./src"]
+  }
+  
