@@ -1,18 +1,18 @@
 {
     "compilerOptions": {
       "target": "ESNext",
+      "module": "ESNext",
       "lib": ["DOM", "DOM.Iterable", "ESNext"], // 指定要包含在编译中的库文件
       "allowJs": false, // 允许编译 javascript 文件
       "skipLibCheck": false,
       "esModuleInterop": false,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
+      "allowSyntheticDefaultImports": true,// 允许从没有设置默认导出的模块中默认导入
+      "strict": true, // 启用所有严格类型检查选项
       "forceConsistentCasingInFileNames": true,
-      "module": "ESNext",
-      "moduleResolution": "Node",
+      "moduleResolution": "Node", // 选择模块解析策略： 'node' (Node.js) or 'classic' (TypeScript pre-1.6)
       "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
+      "isolatedModules": true, // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）.
+      "noEmit": true, // 不生成输出文件
       "jsx": "react", // react18这里也可以改成react-jsx
     },
     "include": ["./src"]
