@@ -15,6 +15,7 @@ import {
 } from 'antd-mobile-icons'
 
 import styles from './outer.less'
+import Home from './pages/Home'
 
 const Bottom: FC = () => {
   const navigate = useNavigate()
@@ -80,9 +81,6 @@ export default () => {
   )
 }
 
-function Home() {
-  return <div>首页</div>
-}
 
 function Todo() {
   return <div>待办</div>
