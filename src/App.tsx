@@ -16,6 +16,7 @@ import {
 
 import styles from './outer.less'
 import Home from './pages/Home'
+import InputData from './pages/InputData'
 
 const Bottom: FC = () => {
   const navigate = useNavigate()
@@ -62,13 +63,14 @@ export default () => {
   return (
     <Router initialEntries={['/home']}>
       <div className={styles.app}>
-       
+
         <div className={styles.body}>
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/todo" element={<Todo />} />
             <Route path="/message" element={<Message />} />
             <Route path="/me" element={<PersonalCenter />} />
+            <Route path="/dataInput" element={<InputData />} />
           </Routes>
         </div>
         <div className={styles.bottom}>
