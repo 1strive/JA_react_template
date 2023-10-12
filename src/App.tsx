@@ -62,9 +62,7 @@ export default () => {
   return (
     <Router initialEntries={['/home']}>
       <div className={styles.app}>
-        <div className={styles.top}>
-          <NavBar>Test</NavBar>
-        </div>
+       
         <div className={styles.body}>
           <Routes>
             <Route path="/home" element={<Home />} />

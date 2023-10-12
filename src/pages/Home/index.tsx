@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './index.less'
-import { Card, Toast, Button } from 'antd-mobile'
+import { Card, Toast, Button, NavBar } from 'antd-mobile'
 
 
 export default function () {
@@ -9,6 +9,9 @@ export default function () {
     }
     return (
         <>
+            <div className={styles.top}>
+                <NavBar>Test</NavBar>
+            </div>
             <Card title='卡片标题' onClick={onClick}>
                 卡片内容
             </Card>
