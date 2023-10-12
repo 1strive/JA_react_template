@@ -1,51 +1,97 @@
-import React, { useState, useEffect } from 'react'
-import styles from './index.less'
-import { Button, Space } from 'antd-mobile'
-import { Badge, TabBar } from 'antd-mobile'
+import React, { FC } from 'react'
+import { NavBar, TabBar } from 'antd-mobile'
 import {
-    AppOutline,
-    MessageOutline,
-    MessageFill,
-    UnorderedListOutline,
-    UserOutline,
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  MemoryRouter as Router,
+} from 'react-router-dom'
+import {
+  AppOutline,
+  MessageOutline,
+  UnorderedListOutline,
+  UserOutline,
 } from 'antd-mobile-icons'
-interface oJ {
-    m: number,
-    l: string
+
+import styles from './outer.less'
+
+const Bottom: FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { pathname } = location
+
+  const setRouteActive = (value: string) => {
+    navigate(value)
+  }
+
+  const tabs = [
+    {
+      key: '/home',
+      title: '首页',
+      icon: <AppOutline />,
+    },
+    {
+      key: '/todo',
+      title: '待办',
+      icon: <UnorderedListOutline />,
+    },
+    {
+      key: '/message',
+      title: '消息',
+      icon: <MessageOutline />,
+    },
+    {
+      key: '/me',
+      title: '我的',
+      icon: <UserOutline />,
+    },
+  ]
+
+  return (
+    <TabBar activeKey={pathname} onChange={value => setRouteActive(value)} className={styles['footer']}>
+      {tabs.map(item => (
+        <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+      ))}
+    </TabBar>
+  )
 }
-function App() {
-    const [activeKey, setActiveKey] = useState('todo')
-    const tabs = [
-        {
-            key: 'home',
-            title: '首页',
-            icon: <AppOutline />,
-            badge: Badge.dot,
-        },
-        {
-            key: 'todo',
-            title: '待办',
-            icon: <UnorderedListOutline />,
-            badge: '5',
-        },
-        {
-            key: 'message',
-            title: '消息',
-            icon: (active: boolean) =>
-                active ? <MessageFill /> : <MessageOutline />,
-            badge: '99+',
-        },
-        {
-            key: 'personalCenter',
-            title: '我的',
-            icon: <UserOutline />,
-        },
-    ]
-    return (
-        <div>
-            <Button color='primary' fill='solid'>123</Button>
-            <div className={styles['ja']}>123</div>
+
+export default () => {
+  return (
+    <Router initialEntries={['/home']}>
+      <div className={styles.app}>
+        <div className={styles.top}>
+          <NavBar>Test</NavBar>
         </div>
-    )
+        <div className={styles.body}>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/todo" element={<Todo />} />
+            <Route path="/message" element={<Message />} />
+            <Route path="/me" element={<PersonalCenter />} />
+          </Routes>
+        </div>
+        <div className={styles.bottom}>
+          <Bottom />
+        </div>
+      </div>
+    </Router>
+  )
 }
-export default App
+
+function Home() {
+  return <div>首页</div>
+}
+
+function Todo() {
+  return <div>待办</div>
+}
+
+function Message() {
+  return <div>消息</div>
+}
+
+function PersonalCenter() {
+  return <div>我的</div>
+}
