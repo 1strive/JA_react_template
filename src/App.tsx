@@ -63,7 +63,6 @@ export default () => {
   return (
     <Router initialEntries={['/home']}>
       <div className={styles.app}>
-
         <div className={styles.body}>
           <Routes>
             <Route path="/home" element={<Home />} />

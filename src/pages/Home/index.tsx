@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.less'
 import { Card, Toast, Button, JumboTabs, Divider, CapsuleTabs } from 'antd-mobile'
 import { AddCircleOutline, EditSFill } from 'antd-mobile-icons';
 import ReactEcharts from 'echarts-for-react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment'
 export default function () {
     const navigate = useNavigate();
     const sugarRate = 0.3
@@ -15,17 +16,46 @@ export default function () {
     const onClick = () => {
         Toast.show('点击了卡片')
     }
+    const [showTime, setShowTime] = useState([])
+    const [showData, setShowData] = useState([])
+    const getData = async () => {
+        try {
+            const tmp = await fetch("http://8.134.86.162:8080/predict/")
+            const res = JSON.parse(await tmp.text())
+            const { result } = res
+            const showArr = result.slice(-20).map((i: any) => {
+                i.time = moment(i.time).format('HH:MM')
+                return i
+            })
+            const timeArr = showArr.map((i: any) => {
+                return i.time
+            })
+            const dataArr = showArr.map((i: any) => {
+                return i.predictValue
+            })
+            console.log(showArr, 'jar');
+            setShowTime(timeArr)
+            setShowData(dataArr)
+        } catch (error) {
+            console.log(error, 'jae');
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     const op = {
         xAxis: {
             type: 'category',
-            data: ['0', '1', '2', '3', '4', '5', '6']
+            data: showTime
         },
         yAxis: {
             type: 'value'
         },
         series: [
             {
-                data: [150, 230, 224, 218, 135, 147, 260],
+                data: showData,
                 type: 'line'
             }
         ]
