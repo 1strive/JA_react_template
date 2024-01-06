@@ -24,7 +24,8 @@ export default function () {
             const res = JSON.parse(await tmp.text())
             const { result } = res
             const showArr = result.slice(-20).map((i: any) => {
-                i.time = moment(i.time).format('HH:MM')
+                console.log(i.time, 'jai');
+                i.time = moment(i.time).format('HH:mm:ss')
                 return i
             })
             const timeArr = showArr.map((i: any) => {
@@ -42,21 +43,25 @@ export default function () {
     }
 
     useEffect(() => {
+        console.log(moment(1703432950000).format('HH:MM'), 'JAWEEW');
         getData()
     }, [])
 
+    // TODO:换chart库
     const op = {
         xAxis: {
             type: 'category',
             data: showTime
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            min: 84,
+            max: 86
         },
         series: [
             {
                 data: showData,
-                type: 'line'
+                type: 'line',
             }
         ]
     }
