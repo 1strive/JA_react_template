@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from './index.less'
 import { useNavigate } from 'react-router-dom';
 import {
@@ -6,12 +6,16 @@ import {
     Input,
     Button,
     NavBar,
-    CalendarPicker
+    List,
+    Toast
 } from 'antd-mobile'
+import { FormInstance } from 'antd-mobile/es/components/form'
 import moment from 'moment'
+import { ListItem } from 'antd-mobile/es/components/list/list-item';
 export default function () {
     const navigate = useNavigate();
-    // const form = useForm()
+    const [data, setData] = useState<any>([])
+    const singleDate: Date = new Date('2023-06-03')
     const back = () => {
         navigate(-1)
     }
@@ -20,23 +24,48 @@ export default function () {
         const { newGlucose, weight } = data
         navigate(`/home?newGlucose=${newGlucose}&weight=${weight}`)
     }
-    const [visible1, setVisible1] = useState(false)
-    const [time, setTime] = useState(null)
-    const singleDate: Date = new Date('2023-06-03')
+    const save = (val: any) => {
+        data.push(val)
+        if (data.length > 10) {
+            Toast.show({
+                content: '已累计十条数据，请先提交',
+            })
+            return
+        }
+        setData([...data])
+    }
 
     return (
         <div className={styles['wrapper']}>
             <NavBar onBack={back}>血糖值记录</NavBar>
+            {data.length ? <List>
+                {data?.map((i: any) => {
+                    console.log(i, 'jai');
+                    return <ListItem>
+                        血糖值:{i?.newGlucose} ; 时间：{i?.time}
+                    </ListItem>
+                })}
+            </List> : null}
             <Form
+                style={{ marginTop: '5px' }}
                 layout='horizontal'
-                onFinish={finish}
+                onFinish={save}
                 footer={
-                    <Button block type='submit' color='primary' size='large'>
-                        保存
-                    </Button>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button block type='submit' color='primary' size='large' className={styles['save-btn']}>
+                            保存
+                        </Button>
+                        <Button block type='button' color='primary' size='large' className={styles['save-btn']}
+                            onClick={() => {
+
+                                finish(data)
+                            }}
+                        >
+                            提交
+                        </Button>
+                    </div>
                 }
             >
-                <Form.Header>血糖值记录</Form.Header>
                 <Form.Item
                     name='newGlucose'
                     label='血糖'
@@ -46,28 +75,12 @@ export default function () {
                     <Input type='number' min={50} max={150} placeholder='请输入血糖' />
                 </Form.Item>
                 <Form.Item
-                    name='newGlucose'
+                    name='time'
                     label='时间'
                     help='时间'
                     rules={[{ required: true, message: '时间' }]}
                 >
-                    {/* {time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : "选择单个日期"} */}
-                    <Input value={time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ""}></Input>
-                    <div onClick={() => {
-                        setVisible1(true)
-                    }}>选择日期</div>
-                    <CalendarPicker
-                        visible={visible1}
-                        selectionMode='single'
-                        defaultValue={singleDate}
-                        onClose={() => setVisible1(false)}
-                        onMaskClick={() => setVisible1(false)}
-                        onConfirm={(val: any) => {
-                            console.log(val, 'jav');
-                            // form.s
-                            setTime(val)
-                        }}
-                    />
+                    <Input type='number' placeholder='时间' />
                 </Form.Item>
             </Form>
 
